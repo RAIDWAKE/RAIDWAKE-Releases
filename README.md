@@ -1,29 +1,29 @@
-# RAIDWAKE
-
 ![RAIDWAKE](assets/raidwake-logo.png)
 
-A Windows launcher for a separate, locally managed Escape from Tarkov installation, with an independently developed gameplay runtime in progress.
+Single-player PvE for Escape from Tarkov, with local progression and configurable raids.
 
-This is the public download hub for RAIDWAKE. Release packages and release notes belong here; source code is maintained separately in a private repository.
+[Releases](https://github.com/RAIDWAKE/RAIDWAKE-Releases/releases) · [Report a bug](https://github.com/RAIDWAKE/RAIDWAKE-Releases/issues)
 
-## Development status
+## Play your way
 
-**There is no playable release currently.** The launcher and local profile foundation are implemented, but the independent gameplay runtime is unfinished. **Play remains disabled.** Installing a separate copy or creating a profile does not make the game playable.
+- Separate characters with edition-based starting gear or Zero to Hero.
+- Per-map raid time, AI difficulty, bot limits and loot settings.
+- Boss spawn chances and map selection, with in-game character previews.
+- A simulated flea market with changing offers and local trading.
 
-The current foundation supports:
+## Availability
 
-- Finding an existing game installation and creating a separate RAIDWAKE copy.
-- Creating, selecting and managing local profiles, including recoverable deletion.
-- Recording starting-preset preferences and checking installation readiness.
+RAIDWAKE is in development. A public playable build is not available yet.
 
-Starting presets currently describe intended starting rules. They do not yet create playable characters, equipment or progression.
+Requires Windows and an installed copy of Escape from Tarkov. The current
+development build targets EFT **1.1.5.47510**. RAIDWAKE uses a separate game copy;
+game files are not included in downloads.
 
-## Downloads
+## Credits
 
-Published packages and their setup instructions will appear on the [Releases page](https://github.com/RAIDWAKE/RAIDWAKE-Releases/releases). Check each release's notes for its requirements, supported client version and known limitations.
+Built with components from [Single Player Tushonka](https://github.com/SP-Tushonka)
+and [SPT](https://github.com/sp-tarkov). Third-party code retains its original
+licenses and attribution.
 
-RAIDWAKE does not include Escape from Tarkov game files. Installation requires your own existing copy. Keep the original game installation separate, and do not launch the copied game directly while runtime support is unfinished.
-
-## Project scope
-
-RAIDWAKE is an independent project and is not affiliated with or endorsed by Battlestate Games. Local profiles are separate from official game accounts. Runtime compatibility and gameplay network isolation remain under development.
+RAIDWAKE is not affiliated with or endorsed by Battlestate Games, SPT or Single
+Player Tushonka. Escape from Tarkov belongs to Battlestate Games.
