@@ -1,0 +1,38 @@
+name: Official EFT news
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+    inputs:
+      connection_check:
+        description: Send a one-time, clearly labelled connection check
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-eft-news
+  cancel-in-progress: false
+
+jobs:
+  news:
+    if: github.repository == 'RAIDWAKE/RAIDWAKE-Releases' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out the news service
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Test announcement rules
+        run: python3 -m unittest discover -s tests -v
+      - name: Check official announcements
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DISCORD_EFT_WEBHOOK: ${{ secrets.DISCORD_EFT_WEBHOOK }}
+          CONNECTION_CHECK: ${{ inputs.connection_check }}
+        run: python3 scripts/eft_news.py
