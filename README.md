@@ -2,7 +2,7 @@
 
 Single-player PvE for Escape from Tarkov, with local progression and configurable raids.
 
-[Releases](https://github.com/RAIDWAKE/RAIDWAKE-Releases/releases) · [Report a bug](https://github.com/RAIDWAKE/RAIDWAKE-Releases/issues)
+[Releases](https://github.com/RAIDWAKE/RAIDWAKE-Releases/releases) · [Discord](https://discord.gg/7hx26mhsbM) · [Report a bug](https://github.com/RAIDWAKE/RAIDWAKE-Releases/issues)
 
 ## Why RAIDWAKE?
 
@@ -30,6 +30,12 @@ RAIDWAKE is in development. A public playable build is not available yet.
 Requires Windows and an installed copy of Escape from Tarkov. The current
 development build targets EFT **1.1.5.47510**. RAIDWAKE uses a separate game copy;
 game files are not included in downloads.
+
+## Community
+
+Join the [RAIDWAKE Discord](https://discord.gg/7hx26mhsbM) for development previews,
+testing discussions, installation help and community loadouts. Published releases
+are announced in the server's release-updates channel.
 
 ## Origins
 
