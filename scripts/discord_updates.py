@@ -40,16 +40,15 @@ def message_for(event, event_name, attempt="1"):
     link = f"{RELEASES}/tag/{quote(tag, safe='')}"
     if len(link) > 1000:
         link = RELEASES
-    heading = f"**{title}** · {label}\n\n"
     ending = f"\n\n[Download and full notes]({link})"
-    available = 2000 - len(heading) - len(ending)
+    available = 3500 - len(ending)
     if len(notes) > available:
         notes = notes[:available - 1].rstrip() + "…"
     return {
         "username": "RAIDWAKE Updates",
         "allowed_mentions": {"parse": []},
-        "content": heading + notes + ending,
-        "flags": 4,  # Keep release notes as text instead of expanding link-preview cards.
+        "embeds": [{"title": title, "url": link, "description": notes + ending,
+                    "color": 0xC89A4B, "footer": {"text": label}}],
     }
 
 

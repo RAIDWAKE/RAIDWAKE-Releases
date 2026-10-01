@@ -25,8 +25,8 @@ class UpdatesTests(unittest.TestCase):
             self.event["release"]["prerelease"] = prerelease
             message = message_for(self.event, "release")
             self.assertEqual(message["allowed_mentions"], {"parse": []})
-            self.assertIn("Alpha / prerelease" if prerelease else "· Release", message["content"])
-            self.assertNotIn("embeds", message)
+            self.assertEqual("Alpha / prerelease" if prerelease else "Release", message["embeds"][0]["footer"]["text"])
+            self.assertEqual(len(message["embeds"]), 1)
 
     def test_private_missing_flag_and_wrong_repository(self):
         for repository in ({"full_name": REPOSITORY, "private": True}, {"full_name": REPOSITORY},
@@ -61,21 +61,22 @@ class UpdatesTests(unittest.TestCase):
     def test_bounded_notes_and_no_mass_mentions(self):
         self.event["release"]["body"] = "@everyone " * 1000
         message = message_for(self.event, "release")
-        self.assertLessEqual(len(message["content"]), 2000)
+        self.assertLessEqual(len(message["embeds"][0]["description"]), 3500)
         self.assertEqual(message["allowed_mentions"]["parse"], [])
 
     def test_link_cannot_point_elsewhere(self):
         self.event["release"]["html_url"] = "https://example.invalid"
         self.event["release"]["tag_name"] = "alpha/#?&"
-        content = message_for(self.event, "release")["content"]
+        content = message_for(self.event, "release")["embeds"][0]["description"]
         self.assertIn(f"https://github.com/{REPOSITORY}/releases/tag/alpha%2F%23%3F%26", content)
         self.assertNotIn("example.invalid", content)
 
     def test_long_names_and_tags_remain_bounded(self):
         self.event["release"].update(name="x" * 5000, tag_name="/" * 5000, body="n" * 5000)
         message = message_for(self.event, "release")
-        self.assertLessEqual(len(message["content"]), 2000)
-        self.assertEqual(message["flags"], 4)
+        self.assertLessEqual(len(message["embeds"][0]["description"]), 3500)
+        self.assertLessEqual(len(message["embeds"][0]["title"]), 200)
+        self.assertNotIn("content", message)
 
     def test_webhook_validation(self):
         valid = "https://discord.com/api/webhooks/123/test-token"
