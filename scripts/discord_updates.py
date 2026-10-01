@@ -35,19 +35,21 @@ def message_for(event, event_name, attempt="1"):
     notes = release.get("body") or "Release details are available on GitHub."
     if not isinstance(notes, str):
         raise ValueError("Release notes must be text.")
-    if len(notes) > 3500:
-        notes = notes[:3450].rstrip() + "\n\nContinue reading on GitHub."
+    title = str(release.get("name") or f"RAIDWAKE {tag}").replace("\n", " ")[:200]
+    label = "Alpha / prerelease" if release.get("prerelease") else "Release"
+    link = f"{RELEASES}/tag/{quote(tag, safe='')}"
+    if len(link) > 1000:
+        link = RELEASES
+    heading = f"**{title}** · {label}\n\n"
+    ending = f"\n\n[Download and full notes]({link})"
+    available = 2000 - len(heading) - len(ending)
+    if len(notes) > available:
+        notes = notes[:available - 1].rstrip() + "…"
     return {
         "username": "RAIDWAKE Updates",
         "allowed_mentions": {"parse": []},
-        "embeds": [{
-            "title": (release.get("name") or f"RAIDWAKE {tag}")[:240],
-            "url": f"{RELEASES}/tag/{quote(tag, safe='')}",
-            "description": notes,
-            "color": 0xC79843,
-            "footer": {"text": "RAIDWAKE · Alpha / prerelease" if release.get("prerelease")
-                       else "RAIDWAKE · Release"},
-        }],
+        "content": heading + notes + ending,
+        "flags": 4,  # Keep release notes as text instead of expanding link-preview cards.
     }
 
 
