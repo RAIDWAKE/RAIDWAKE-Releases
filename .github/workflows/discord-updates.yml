@@ -1,0 +1,31 @@
+name: Discord release updates
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: discord-release-${{ github.event.release.id || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  announce:
+    if: github.repository == 'RAIDWAKE/RAIDWAKE-Releases' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check out the notification service
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Test notification rules
+        run: python3 -m unittest discover -s tests -v
+      - name: Send update
+        env:
+          DISCORD_UPDATES_WEBHOOK: ${{ secrets.DISCORD_UPDATES_WEBHOOK }}
+        run: python3 scripts/discord_updates.py
